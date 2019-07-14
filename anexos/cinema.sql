@@ -22,14 +22,14 @@ USE `cinema` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cinema`.`pelicula` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `nombre_original` VARCHAR(45) NULL DEFAULT NULL,
-  `nombre_traducido` VARCHAR(45) NULL DEFAULT NULL,
-  `fecha_estreno` DATE NULL DEFAULT NULL,
-  `fecha_baja` DATE NULL DEFAULT NULL,
-  `url_imagen` VARCHAR(200) NULL DEFAULT NULL,
-  `sipnosis` VARCHAR(800) NULL DEFAULT NULL,
-  `formato` VARCHAR(45) NULL DEFAULT NULL,
-  `duracion` DECIMAL(10,2) NULL DEFAULT NULL,
+  `nombre_original` VARCHAR(45) NOT NULL,
+  `nombre_traducido` VARCHAR(45) NOT NULL,
+  `fecha_estreno` DATE NOT NULL,
+  `fecha_baja` DATE NOT NULL,
+  `url_imagen` VARCHAR(200) NOT NULL,
+  `sipnosis` VARCHAR(800) NOT NULL,
+  `formato` VARCHAR(45) NOT NULL,
+  `duracion` DECIMAL(10,2) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -52,10 +52,10 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cinema`.`usuario` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `nombre` VARCHAR(45) NULL DEFAULT NULL,
-  `apellido` VARCHAR(45) NULL DEFAULT NULL,
-  `tipo_identificacion` VARCHAR(45) NULL DEFAULT NULL,
-  `numero_identificacion` VARCHAR(45) NULL DEFAULT NULL,
+  `nombre` VARCHAR(45) NOT NULL,
+  `apellido` VARCHAR(45) NOT NULL,
+  `tipo_identificacion` VARCHAR(45) NOT NULL,
+  `numero_identificacion` VARCHAR(45) NOT NULL,
   `usuario` VARCHAR(50) NOT NULL,
   `password` VARCHAR(60) NOT NULL,
   PRIMARY KEY (`id`),
@@ -70,8 +70,8 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cinema`.`sucursal` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `nombre` VARCHAR(45) NULL DEFAULT NULL,
-  `direccion` VARCHAR(45) NULL DEFAULT NULL,
+  `nombre` VARCHAR(45) NOT NULL,
+  `direccion` VARCHAR(45) NOT NULL,
   `ciudad_id` INT(11) NOT NULL,
   `administrador_id` INT(11) NOT NULL,
   PRIMARY KEY (`id`, `ciudad_id`, `administrador_id`),
@@ -129,9 +129,9 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cinema`.`informacion_adicional` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `label_campo` VARCHAR(200) NULL DEFAULT NULL,
-  `tipo_campo` VARCHAR(100) NULL DEFAULT NULL,
-  `valor_campo` VARCHAR(45) NULL DEFAULT NULL,
+  `label_campo` VARCHAR(200) NOT NULL,
+  `tipo_campo` VARCHAR(100) NOT NULL,
+  `valor_campo` VARCHAR(45) NOT NULL,
   `pelicula_id` INT(11) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_INFORMACION_ADICIONAL_PELICULA1_idx` (`pelicula_id` ASC),
@@ -172,7 +172,7 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cinema`.`tipo_sala` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `nombre` VARCHAR(45) NULL DEFAULT NULL,
+  `nombre` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -184,8 +184,8 @@ DEFAULT CHARACTER SET = utf8;
 CREATE TABLE IF NOT EXISTS `cinema`.`sala` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `tipo_sala_id` INT(11) NOT NULL,
-  `numero_filas` INT(11) NULL DEFAULT NULL,
-  `max_sillas_fila` INT(11) NULL DEFAULT NULL,
+  `numero_filas` INT(11) NOT NULL,
+  `max_sillas_fila` INT(11) NOT NULL,
   `sucursal_id` INT(11) NOT NULL,
   PRIMARY KEY (`id`, `tipo_sala_id`, `sucursal_id`),
   INDEX `fk_SALA_TIPO_SALA1_idx` (`tipo_sala_id` ASC),
@@ -239,7 +239,8 @@ CREATE TABLE IF NOT EXISTS `cinema`.`reserva` (
   `ciudad_id` INT(11) NOT NULL,
   `sucursal_id` INT(11) NOT NULL,
   `programacion_id` INT(11) NOT NULL,
-  `fecha` DATETIME NULL DEFAULT NULL,
+  `fecha` DATETIME NOT NULL,
+  `sillas` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`, `ciudad_id`, `sucursal_id`, `programacion_id`),
   INDEX `fk_RESERVA_CIUDAD1_idx` (`ciudad_id` ASC),
   INDEX `fk_RESERVA_SUCURSAL1_idx` (`sucursal_id` ASC),
@@ -301,8 +302,8 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cinema`.`CONFIGURACION_SISTEMA` (
   `id` VARCHAR(45) NOT NULL,
-  `valor` VARCHAR(45) NULL,
-  `descripcion` VARCHAR(100) NULL,
+  `valor` VARCHAR(45) NOT NULL,
+  `descripcion` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC))
 ENGINE = InnoDB;
